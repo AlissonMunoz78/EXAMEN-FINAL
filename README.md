@@ -14,7 +14,8 @@ C5gestion_conferencias/
 
 ---
 
-## ⚙️ Backend
+## ⚙️ Backend    https://examen-final-khaki.vercel.app
+
 
 ### Tecnologías
 - Node.js + Express 4
@@ -85,7 +86,7 @@ npm run dev
 
 ---
 
-## 🖥️ Frontend
+## 🖥️ Frontend  https://galaxyconf.vercel.app
 
 ### Tecnologías
 - React 18 + Vite
