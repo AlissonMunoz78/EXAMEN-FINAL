@@ -1,37 +1,29 @@
-// ================================================
-// SERVIDOR — Express, CORS, rutas y manejo de errores
-// ================================================
-
 import express from 'express'
 import cors from 'cors'
-
-// TODO: Importar rutas aquí cuando se creen
-// import ejemploRoutes from './routes/ejemplo_routes.js'
+import authRoutes          from './routes/auth_routes.js'
+import auditorioRoutes     from './routes/auditorio_routes.js'
+import conferencistaRoutes from './routes/conferencista_routes.js'
+import reservaRoutes       from './routes/reserva_routes.js'
 
 const app = express()
 
-// ── Middlewares globales ──────────────────────────
-app.use(cors())
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}))
+app.options('*', cors())
+
 app.use(express.json())
 
-// ── Ruta de prueba (verificar que el servidor funciona) ──
-app.get('/', (req, res) => {
-  res.json({ msg: '✅ Servidor funcionando correctamente' })
-})
+app.get('/', (_, res) => res.send('🎤 API – Sistema de Gestión de Conferencias'))
 
-// ── Rutas de la API ───────────────────────────────
-// TODO: Registrar rutas aquí cuando se creen
-// app.use('/api/ejemplo', ejemploRoutes)
+app.use('/api/auth',           authRoutes)
+app.use('/api/auditorios',     auditorioRoutes)
+app.use('/api/conferencistas', conferencistaRoutes)
+app.use('/api/reservas',       reservaRoutes)
 
-// ── Manejo de rutas no encontradas (404) ──────────
-app.use((req, res) => {
-  res.status(404).json({ msg: 'Ruta no encontrada' })
-})
-
-// ── Manejo global de errores (500) ────────────────
-app.use((err, req, res, next) => {
-  console.error('❌ Error:', err.message)
-  res.status(500).json({ msg: 'Error interno del servidor' })
-})
+app.use((req, res) => res.status(404).json({ msg: 'Endpoint no encontrado' }))
+app.use((err, req, res, next) => res.status(500).json({ msg: 'Error interno del servidor' }))
 
 export default app
