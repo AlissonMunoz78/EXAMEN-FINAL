@@ -88,6 +88,11 @@ npm run dev
 
 ## 🖥️ Frontend  https://galaxyconf.vercel.app
 
+### Credenciales de acceso
+
+-Correo electrónico: ali@gmail.com
+-Contraseña: 123456
+
 ### Tecnologías
 - React 18 + Vite
 - React Router DOM
