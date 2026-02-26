@@ -78,7 +78,6 @@ C5gestion_conferencias/
 ```env
 MONGODB_URI=mongodb+srv://...
 JWT_SECRET=tu_clave_secreta
-NODE_ENV=production
 ```
 
 ### Instalación local
@@ -112,7 +111,7 @@ npm run dev
 
 ### Variables de Entorno (frontend)
 ```env
-VITE_API_URL=https://tu-backend.vercel.app/api
+VITE_API_URL=https://examen-final-khaki.vercel.app
 ```
 
 ### Instalación local
