@@ -1,25 +1,26 @@
-// ================================================
-// ENTRADA PRINCIPAL — Conectar DB y arrancar server
-// ================================================
-
-import 'dotenv/config'
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 import app from './server.js'
 
-const PORT = process.env.PORT || 3000
+dotenv.config()
+
+let isConnected = false
 
 const conectarDB = async () => {
+  if (isConnected) return
   await mongoose.connect(process.env.MONGODB_URI)
-  console.log('✅ Conectado a MongoDB')
+  isConnected = true
+  console.log('✅ Conexión a MongoDB exitosa — Base de datos: caso5')
 }
 
-conectarDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`)
-    })
-  })
-  .catch((error) => {
-    console.error('❌ Error al conectar a MongoDB:', error.message)
-    process.exit(1)
-  })
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000
+  conectarDB()
+    .then(() => app.listen(PORT, () => console.log(`🚀 Servidor corriendo en el puerto ${PORT}`)))
+    .catch(err => { console.error('❌ Error:', err.message); process.exit(1) })
+}
+
+export default async (req, res) => {
+  await conectarDB()
+  app(req, res)
+}
